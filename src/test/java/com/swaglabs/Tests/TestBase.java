@@ -29,22 +29,7 @@ public class TestBase {
 
     public String accesskey = System.getenv("SAUCE_ACCESS_KEY");
 
-    public String osOption = System.getenv("SAUCE_OS_OPTION");
-
-    /**
-     * Options for osOption are:
-     * edgeIEWindows: MS Edge and IE on Windows
-     * safariMac: Safari on Mac
-     * chromeAll: chrome on both Windows and Mac
-     * chromeFireFoxAll: chrome and firefox on both Windows and Mac (default)
-     * fireFoxAll: FireFox on both Windows and Mac
-     * chromeWin: Chrome on Windows
-     * chromeMac: Chrome on Mac
-     * fireFoxWin: FireFox on Windows
-     * fireFoxMac: FireFox on Mac
-     * NOTE: latest three browser versions and latest OS versions are hardcoded
-     * NOTE: if osOption is null, chromeFireFoxAll is the default
-     */
+    public String accesskeyHeadless = System.getenv("SAUCE_ACCESS_KEY_HEADLESS"); //use only with Headless RemoteWebdriver url
 
     /**
      * ThreadLocal variable which contains the {@link WebDriver} instance which
@@ -68,48 +53,53 @@ public class TestBase {
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][]{
 
-          // if (osOption === "edgeIEWindows"){
-            // Windows OS
-            // new Object[]{"MicrosoftEdge", "latest", "Windows 10"},
-            // new Object[]{"MicrosoftEdge", "latest-1", "Windows 10"},
-            // new Object[]{"MicrosoftEdge", "latest-1", "Windows 10"},
-
-            // new Object[]{"internet explorer", "latest", "Windows 7"},
-          // } else {
-
             new Object[]{"firefox", "latest", "Windows 10"},
-            new Object[]{"firefox", "latest-1", "Windows 10"},
+//            new Object[]{"firefox", "latest-1", "Windows 10"},
+//            new Object[]{"firefox", "latest-2", "Windows 10"},
 
             new Object[]{"chrome", "latest", "Windows 10"},
-            new Object[]{"chrome", "latest-1", "Windows 10"},
+//            new Object[]{"chrome", "latest-1", "Windows 10"},
+//            new Object[]{"chrome", "latest-2", "Windows 10"},
 
 
-            // Mac OS
-            // new Object[]{"safari", "latest", "OS X 10.11"},
-            // new Object[]{"safari", "latest-1", "OS X 10.11"},
-            // new Object[]{"safari", "latest-2", "OS X 10.11"},
-
-            // new Object[]{"safari", "latest", "OS X 10.10"},
-            // new Object[]{"safari", "latest-1", "OS X 10.10"},
-            // new Object[]{"safari", "latest-2", "OS X 10.10"},
+                // Mac OS
+            new Object[]{"safari", "latest", "OS X 10.11"},
+//            new Object[]{"safari", "latest-1", "OS X 10.11"},
+//            new Object[]{"safari", "latest-2", "OS X 10.11"},
+            
+            new Object[]{"safari", "latest", "OS X 10.10"}, 
+//            new Object[]{"safari", "latest-1", "OS X 10.10"},
+//            new Object[]{"safari", "latest-2", "OS X 10.10"},
 
             new Object[]{"chrome", "latest", "OS X 10.11"},
-            new Object[]{"chrome", "latest-1", "OS X 10.11"},
+//            new Object[]{"chrome", "latest-1", "OS X 10.11"},
+//            new Object[]{"chrome", "latest-2", "OS X 10.11"},
+                
             new Object[]{"chrome", "latest", "OS X 10.10"},
-            new Object[]{"chrome", "latest-1", "OS X 10.10"},
+//            new Object[]{"chrome", "latest-1", "OS X 10.10"},
+//            new Object[]{"chrome", "latest-2", "OS X 10.10"},
+
             new Object[]{"firefox", "latest", "OS X 10.11"},
+//            new Object[]{"firefox", "latest-1", "OS X 10.11"},
+//            new Object[]{"firefox", "latest-2", "OS X 10.11"},
+
+            new Object[]{"firefox", "latest", "OS X 10.10"},
+//            new Object[]{"firefox", "latest-1", "OS X 10.10"},
+//            new Object[]{"firefox", "latest-2", "OS X 10.10"},
           // }
 
             /**
             *** use these when running headless
             **/
 
-            // new Object[]{"firefox", "latest", "Linux"},
-            // new Object[]{"firefox", "latest-1", "Linux"},
-            // new Object[]{"firefox", "latest-2", "Linux"},
-            // new Object[]{"chrome", "latest", "Linux"},
-            // new Object[]{"chrome", "latest-1", "Linux"},
-            // new Object[]{"chrome", "latest-2", "Linux"},
+//            new Object[]{"chrome", "latest", "Linux"},
+//            new Object[]{"chrome", "latest-1", "Linux"},
+//            new Object[]{"chrome", "latest-2", "Linux"},
+
+//            new Object[]{"firefox", "latest", "Linux"},
+//            new Object[]{"firefox", "latest-1", "Linux"},
+//            new Object[]{"firefox", "latest-2", "Linux"},
+
         };
     }
 
@@ -154,14 +144,14 @@ public class TestBase {
         capabilities.setCapability(CapabilityType.VERSION, version);
         capabilities.setCapability(CapabilityType.PLATFORM, os);
         capabilities.setCapability("name", methodName);
-        // capabilities.setCapability("recordScreenshots", false);
-         capabilities.setCapability("extendedDebugging", true);
-         capabilities.setCapability("capturePerformance", true);
-//         capabilities.setCapability("crmuxdriverVersion", "beta");
-        // capabilities.setCapability("tunnelIdentifier", ".West1"); //
-        // capabilities.setCapability("build", System.getenv("JOB_NAME") + " __ " + System.getenv("BUILD_NUMBER") + " __ " + System.getenv("BUILD_TAG"));
-        // capabilities.setCapability("build", "v26-TopLevel3");
-       // capabilities.setCapability("avoidProxy", true);
+//        capabilities.setCapability("recordScreenshots", false);
+//        capabilities.setCapability("extendedDebugging", true);
+//        capabilities.setCapability("capturePerformance", true);
+//        capabilities.setCapability("crmuxdriverVersion", "beta");
+//        capabilities.setCapability("tunnelIdentifier", "SauceProxy1"); //
+//        capabilities.setCapability("build", System.getenv("JOB_NAME") + " __ " + System.getenv("BUILD_NUMBER") + " __ " + System.getenv("BUILD_TAG"));
+//        capabilities.setCapability("build", "v26-TopLevel3");
+//        capabilities.setCapability("avoidProxy", true);
 
         //Getting the build name.
         // Using the Jenkins ENV var. You can use your own. If it is not set test will run without a build id.
@@ -174,17 +164,17 @@ public class TestBase {
         // Launch remote browser and set it as the current thread
         webDriver.set(new RemoteWebDriver(
                 new URL("https://" + username + ":" + accesskey + "@ondemand.saucelabs.com:443/wd/hub"), // Sauce full VMs
-                // new URL("https://" + username + ":" + accesskey + "@ondemand.us-east-1.saucelabs.com/wd/hub"), // Sauce Headless Sessions
-                capabilities));
+//                    new URL("https://" + username + ":" + accesskeyHeadless + "@ondemand.us-east-1.saucelabs.com/wd/hub"), // Sauce Headless Sessions
+                capabilities)
+        );
 
         // System.out.println("Desired capabilities from SauceLabs are: " + driver.getCapabilities().asMap());
 
         // set current sessionId
-        // String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
-        // sessionId.set(id);
-       // String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s",
-       //         sessionId, System.getenv("JOB_NAME"));
-       // System.out.println(message);
+        String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
+        sessionId.set(id);
+        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId, System.getenv("JOB_NAME"));
+        System.out.println(message);
     }
 
     /**
@@ -194,6 +184,7 @@ public class TestBase {
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) webDriver.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed")); //sauce:context
+//        ((JavascriptExecutor) webDriver.get()).executeScript("sauce:job-build=" + "with retries"); //sauce:context
         webDriver.get().quit();
     }
 
