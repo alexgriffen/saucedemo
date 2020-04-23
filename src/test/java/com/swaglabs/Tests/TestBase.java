@@ -25,6 +25,8 @@ public class TestBase {
 
     public String buildTag = System.getenv("BUILD_TAG");
 
+    public String githubBuildTag = System.getenv("GITHUB_RUN_NUMBER");
+
     public String username = System.getenv("SAUCE_USERNAME");
 
     public String accesskey = System.getenv("SAUCE_ACCESS_KEY");
@@ -154,9 +156,11 @@ public class TestBase {
 //        capabilities.setCapability("avoidProxy", true);
 
         //Getting the build name.
-        // Using the Jenkins ENV var. You can use your own. If it is not set test will run without a build id.
+        // Using the Jenkins ENV var or Github Action ENV var. You can use your own. If it is not set test will run without a build id.
         if (buildTag != null) {
             capabilities.setCapability("build", buildTag);
+        } else if (githubBuildTag != null) {
+            capabilities.setCapability("build", githubBuildTag);
         }
 
         System.out.println(capabilities);
