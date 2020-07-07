@@ -1,7 +1,9 @@
 package com.swaglabs.Pages;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,10 +16,10 @@ public class LoginPage {
     @FindBy(xpath = "//input[@placeholder='Username']") // enable to have tests pass
     private WebElement usernameTextBox;
 
-    @FindBy(xpath = "//input[@placeholder='Password']")
+    @FindBy(xpath = "//input[@id='password']")
     private WebElement passwordTextBox;
 
-    @FindBy(xpath = "//input[@value='LOGIN']")
+    @FindBy(xpath = "//input[@class='btn_action']")
     private WebElement loginButton;
 
     @FindBy(xpath = "//h3[@data-test='error']")
@@ -54,7 +56,7 @@ public class LoginPage {
     	usernameTextBox.sendKeys(username);
     	//Thread.sleep(1000);
     	passwordTextBox.sendKeys(password);
-    	//Thread.sleep(4000);
+    	Thread.sleep(1000);
     	//loginCredentials.click();
     	//Thread.sleep(4000);
     	loginButton.click();
