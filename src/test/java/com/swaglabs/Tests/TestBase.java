@@ -56,38 +56,37 @@ public class TestBase {
         return new Object[][]{
 
             new Object[]{"firefox", "latest", "Windows 10"},
-//            new Object[]{"firefox", "latest-1", "Windows 10"},
-//            new Object[]{"firefox", "latest-2", "Windows 10"},
+            new Object[]{"firefox", "latest-1", "Windows 10"},
+            new Object[]{"firefox", "latest-2", "Windows 10"},
 
             new Object[]{"chrome", "latest", "Windows 10"},
-//            new Object[]{"chrome", "latest-1", "Windows 10"},
+            new Object[]{"chrome", "latest-1", "Windows 10"},
 //            new Object[]{"chrome", "latest-2", "Windows 10"},
 
 
                 // Mac OS
-            new Object[]{"safari", "latest", "OS X 10.11"},
-//            new Object[]{"safari", "latest-1", "OS X 10.11"},
-//            new Object[]{"safari", "latest-2", "OS X 10.11"},
+//            new Object[]{"safari", "latest", "macOS 10.15"},
+//            new Object[]{"safari", "13.0", "macOS 10.15"},
+//            new Object[]{"safari", "latest-2", "macOS 10.11"},
             
-            new Object[]{"safari", "latest", "OS X 10.10"}, 
-//            new Object[]{"safari", "latest-1", "OS X 10.10"},
-//            new Object[]{"safari", "latest-2", "OS X 10.10"},
+//            new Object[]{"safari", "latest", "macOS 10.14"},
+//            new Object[]{"safari", "12.0", "macOS 10.14"},
 
-            new Object[]{"chrome", "latest", "OS X 10.11"},
-//            new Object[]{"chrome", "latest-1", "OS X 10.11"},
-//            new Object[]{"chrome", "latest-2", "OS X 10.11"},
+            new Object[]{"chrome", "latest", "macOS 10.15"},
+            new Object[]{"chrome", "latest-1", "macOS 10.15"},
+            new Object[]{"chrome", "latest-2", "macOS 10.15"},
                 
-            new Object[]{"chrome", "latest", "OS X 10.10"},
-//            new Object[]{"chrome", "latest-1", "OS X 10.10"},
-//            new Object[]{"chrome", "latest-2", "OS X 10.10"},
+//            new Object[]{"chrome", "latest", "macOS 10.14"},
+//            new Object[]{"chrome", "latest-1", "macOS 10.14"},
+//            new Object[]{"chrome", "latest-2", "macOS 10.14"},
 
-            new Object[]{"firefox", "latest", "OS X 10.11"},
-//            new Object[]{"firefox", "latest-1", "OS X 10.11"},
-//            new Object[]{"firefox", "latest-2", "OS X 10.11"},
+            new Object[]{"firefox", "latest", "macOS 10.15"},
+            new Object[]{"firefox", "latest-1", "macOS 10.15"},
+//            new Object[]{"firefox", "latest-2", "macOS 10.15"},
 
-            new Object[]{"firefox", "latest", "OS X 10.10"},
-//            new Object[]{"firefox", "latest-1", "OS X 10.10"},
-//            new Object[]{"firefox", "latest-2", "OS X 10.10"},
+//            new Object[]{"firefox", "latest", "macOS 10.14"},
+//            new Object[]{"firefox", "latest-1", "macOS 10.14"},
+//            new Object[]{"firefox", "latest-2", "macOS 10.14"},
           // }
 
             /**
@@ -138,7 +137,7 @@ public class TestBase {
      * @throws MalformedURLException if an error occurs parsing the url
      */
     protected void createDriver(String browser, String version, String os, String methodName)
-            throws MalformedURLException, UnexpectedException {
+            throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // set desired capabilities to launch appropriate browser on Sauce
@@ -158,7 +157,7 @@ public class TestBase {
         //Getting the build name.
         // Using the Jenkins ENV var or Github Action ENV var. You can use your own. If it is not set test will run without a build id.
         if (buildTag != null) {
-            capabilities.setCapability("build", buildTag);
+            capabilities.setCapability("build", "Chrome+FF" + buildTag);
         } else if (githubBuildTag != null) {
             capabilities.setCapability("build", githubBuildTag);
         }
@@ -177,8 +176,8 @@ public class TestBase {
         // set current sessionId
         String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
         sessionId.set(id);
-        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId, System.getenv("JOB_NAME"));
-        System.out.println(message);
+//        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId, System.getenv("JOB_NAME"));
+//        System.out.println(message);
     }
 
     /**
@@ -188,7 +187,6 @@ public class TestBase {
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) webDriver.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed")); //sauce:context
-//        ((JavascriptExecutor) webDriver.get()).executeScript("sauce:job-build=" + "with retries"); //sauce:context
         webDriver.get().quit();
     }
 
