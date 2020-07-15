@@ -157,7 +157,7 @@ public class TestBase {
         //Getting the build name.
         // Using the Jenkins ENV var or Github Action ENV var. You can use your own. If it is not set test will run without a build id.
         if (buildTag != null) {
-            capabilities.setCapability("build", "Chrome+FF" + buildTag);
+            capabilities.setCapability("build", buildTag);
         } else if (githubBuildTag != null) {
             capabilities.setCapability("build", githubBuildTag);
         }
