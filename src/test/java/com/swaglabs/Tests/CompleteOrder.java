@@ -1,18 +1,9 @@
-
-
-
 package com.swaglabs.Tests;
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
+
 import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import com.swaglabs.Pages.CartPage;
 import com.swaglabs.Pages.CheckoutOverviewPage;
 import com.swaglabs.Pages.CheckoutPage;
@@ -22,7 +13,6 @@ import com.swaglabs.Pages.OrderConfirmationPage;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.rmi.UnexpectedException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Shadab Siddiqui on 11/21/18.
